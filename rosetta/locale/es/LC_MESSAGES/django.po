@@ -38,7 +38,7 @@ msgstr "No hay un catálogo actual"
 
 #: templates/rosetta/base.html:33
 msgid "Restart web server"
-msgstr "Reiniciando el servidor"
+msgstr "Reiniciar el servidor"
 
 #: templates/rosetta/base.html:34
 msgid "Update a catalogue"
