@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 setup(
-    name='django-rosetta',
+    name='django-rosetta-yaco',
     version=__import__('rosetta').get_version(limit=3),
     description='A Django application that eases the translation of Django projects',
     author='Marco Bonetti',
