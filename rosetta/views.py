@@ -187,12 +187,9 @@ def home(request):
                 return HttpResponseRedirect(reverse('rosetta-home') + iri_to_uri(query_arg))
         rosetta_i18n_lang_name = _(storage.get('rosetta_i18n_lang_name'))
         rosetta_i18n_lang_code = storage.get('rosetta_i18n_lang_code')
+        query_arg = '?' + request.GET.urlencode()
         if 'query' in request.REQUEST and request.REQUEST.get('query', '').strip():
             query = request.REQUEST.get('query').strip()
-            if query_arg:
-                query_arg += '&query=%s' % request.REQUEST.get('query')
-            else:
-                query_arg = '?query=%s' % request.REQUEST.get('query')
             rx = re.compile(re.escape(query), re.IGNORECASE)
             paginator = Paginator([e for e in rosetta_i18n_pofile if not e.obsolete and rx.search(smart_unicode(e.msgstr) + smart_unicode(e.msgid) + u''.join([o[0] for o in e.occurrences]))], rosetta_settings.MESSAGES_PER_PAGE)
         else:
@@ -480,7 +477,6 @@ def lang_sel(request, langid, idx):
     """
     Selects a file to be translated
     """
-    query_arg = ''
     storage = get_storage(request)
     if langid not in [l[0] for l in settings.LANGUAGES]:
         raise Http404
@@ -510,12 +506,8 @@ def lang_sel(request, langid, idx):
         except OSError:
             storage.set('rosetta_i18n_write', False)
 
-        if 'query' in request.REQUEST and request.REQUEST.get('query', '').strip():
-            if query_arg:
-                query_arg += '&query=%s' % request.REQUEST.get('query')
-            else:
-                query_arg = '?query=%s' % request.REQUEST.get('query')
-
+        query_arg = '?'
+        query_arg += request.GET.urlencode()
         return HttpResponseRedirect(reverse('rosetta-home') + query_arg)
 lang_sel = never_cache(lang_sel)
 lang_sel = user_passes_test(lambda user: can_translate(user), settings.LOGIN_URL)(lang_sel)
