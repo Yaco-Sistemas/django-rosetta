@@ -1,5 +1,9 @@
+Version 0.6.11
+--------------
+ * Change "save translation" behaviour to avoid continuation to next block.
+
 Version 0.6.10
--------------
+--------------
  * Fixed "continue translate" button error
 
 Version 0.6.9
